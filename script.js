@@ -1,141 +1,104 @@
-// script.js - final version for World Geography Quiz
-document.addEventListener("DOMContentLoaded", () => {
-  const gradeBtn = document.getElementById("gradeBtn");
-  if (gradeBtn) gradeBtn.addEventListener("click", gradeQuiz);
+// script.js - robust, fixed version
+(function () {
+  // Helpers
+  const get = id => document.getElementById(id);
+  const setFieldError = (id, msg) => { const el = get(id); if (el) el.textContent = msg; };
+  const clearFieldErrors = () => {
+    ["q1Error","q2Error","q3Error","q4Error","q5Error","formError"].forEach(id => setFieldError(id,""));
+  };
 
-  // initialize attempts display
-  let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
-  if (isNaN(attempts)) attempts = 0;
-  updateAttemptsDisplay(attempts);
-});
-
-function showCorrect(num) {
-  const el = document.getElementById("mark" + num);
-  if (el) {
-    el.innerHTML = `<img src="check.png" alt="correct" width="20" height="20">`;
+  function showCorrect(num) {
+    const el = get("mark"+num);
+    if (el) el.innerHTML = `<img src="check.png" alt="correct" width="20" height="20">`;
   }
-}
-
-function showWrong(num) {
-  const el = document.getElementById("mark" + num);
-  if (el) {
-    el.innerHTML = `<img src="x.png" alt="incorrect" width="20" height="20">`;
+  function showWrong(num) {
+    const el = get("mark"+num);
+    if (el) el.innerHTML = `<img src="x.png" alt="incorrect" width="20" height="20">`;
   }
-}
-
-function clearMarks() {
-  for (let i = 1; i <= 5; i++) {
-    const el = document.getElementById("mark" + i);
-    if (el) el.innerHTML = "";
+  function clearMarks() {
+    for (let i=1;i<=5;i++) { const el = get("mark"+i); if(el) el.innerHTML=""; }
+    if (get("totalScore")) get("totalScore").textContent = "";
+    if (get("over80")) get("over80").textContent = "";
   }
-  const scoreEl = document.getElementById("totalScore");
-  if (scoreEl) scoreEl.textContent = "";
-  const over80 = document.getElementById("over80");
-  if (over80) over80.textContent = "";
-}
-
-function isFormValid() {
-  const q1 = document.getElementById("q1") && document.getElementById("q1").value.trim();
-  const q2 = document.getElementById("q2") && document.getElementById("q2").value;
-  const q4 = document.querySelector('input[name="q4"]:checked');
-  const q5 = document.getElementById("q5") && document.getElementById("q5").value;
-
-  if (!q1) {
-    alert("Please answer question 1 (capital of France).");
-    return false;
-  }
-  if (!q2) {
-    alert("Please answer question 2 (largest ocean).");
-    return false;
-  }
-  if (!q4) {
-    alert("Please answer question 4 (largest population).");
-    return false;
-  }
-  if (!q5) {
-    alert("Please answer question 5 (Great Barrier Reef location).");
-    return false;
-  }
-  return true;
-}
-
-function gradeQuiz() {
-  if (!isFormValid()) return;
-
-  clearMarks();
-  let score = 0;
-
-  // Q1: Paris
-  const q1 = (document.getElementById("q1").value || "").trim().toLowerCase();
-  if (q1 === "paris") {
-    score += 20;
-    showCorrect(1);
-  } else {
-    showWrong(1);
+  function updateAttemptsDisplay(n) {
+    const el = get("totalAttempts");
+    if (el) el.textContent = `Total Attempts: ${n}`;
   }
 
-  // Q2: pacific
-  const q2 = document.getElementById("q2").value;
-  if (q2 === "pacific") {
-    score += 20;
-    showCorrect(2);
-  } else {
-    showWrong(2);
+  function validateForm() {
+    clearFieldErrors();
+    let ok = true;
+    const q1 = (get("q1") && get("q1").value.trim()) || "";
+    const q2 = get("q2") && get("q2").value;
+    const q4 = document.querySelector('input[name="q4"]:checked');
+    const q5 = get("q5") && get("q5").value;
+
+    if (!q1) { setFieldError("q1Error","Please enter the capital of France."); ok = false; }
+    if (!q2) { setFieldError("q2Error","Please select the largest ocean."); ok = false; }
+    // Q3 is optional to validate presence; we accept any selection but grading expects specific checks
+    if (!q4) { setFieldError("q4Error","Please choose a country."); ok = false; }
+    if (!q5) { setFieldError("q5Error","Please select a location."); ok = false; }
+
+    if (!ok) setFieldError("formError","Please fix the highlighted fields and submit again.");
+    return ok;
   }
 
-  // Q3: continents = Asia, Europe, Africa (Greenland is incorrect)
-  const asia = !!document.getElementById("Asia").checked;
-  const europe = !!document.getElementById("Europe").checked;
-  const africa = !!document.getElementById("Africa").checked;
-  const greenland = !!document.getElementById("Greenland").checked;
-  if (asia && europe && africa && !greenland) {
-    score += 20;
-    showCorrect(3);
-  } else {
-    showWrong(3);
-  }
+  function gradeQuiz() {
+    // Run validation first
+    if (!validateForm()) return;
 
-  // Q4: country with largest population = china
-  const q4 = document.querySelector('input[name="q4"]:checked');
-  if (q4 && q4.value === "china") {
-    score += 20;
-    showCorrect(4);
-  } else {
-    showWrong(4);
-  }
+    clearMarks();
+    let score = 0;
 
-  // Q5: Great Barrier Reef = australia
-  const q5 = document.getElementById("q5").value;
-  if (q5 === "australia") {
-    score += 20;
-    showCorrect(5);
-  } else {
-    showWrong(5);
-  }
+    // Q1 (Paris)
+    const q1 = (get("q1").value || "").trim().toLowerCase();
+    if (q1 === "paris") { score += 20; showCorrect(1); } else { showWrong(1); }
 
-  // display score
-  const scoreEl = document.getElementById("totalScore");
-  if (scoreEl) scoreEl.textContent = `Total Score: ${score}`;
+    // Q2 (Pacific)
+    const q2 = get("q2").value;
+    if (q2 === "pacific") { score += 20; showCorrect(2); } else { showWrong(2); }
 
-  // update and persist attempts
-  let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
-  if (isNaN(attempts)) attempts = 0;
-  attempts += 1;
-  localStorage.setItem("total_attempts", attempts);
-  updateAttemptsDisplay(attempts);
+    // Q3 (continents: Asia, Europe, Africa; Greenland is NOT a continent)
+    const asia = !!(get("Asia") && get("Asia").checked);
+    const europe = !!(get("Europe") && get("Europe").checked);
+    const africa = !!(get("Africa") && get("Africa").checked);
+    const greenland = !!(get("Greenland") && get("Greenland").checked);
+    if (asia && europe && africa && !greenland) { score += 20; showCorrect(3); } else { showWrong(3); }
 
-  // congratulatory message (>80)
-  const over80 = document.getElementById("over80");
-  if (over80) {
-    if (score > 80) {
-      over80.textContent = "Congratulations! You scored above 80!";
-    } else {
-      over80.textContent = "Try again! You scored 80 or below.";
+    // Q4 (China)
+    const q4 = document.querySelector('input[name="q4"]:checked');
+    if (q4 && q4.value === "china") { score += 20; showCorrect(4); } else { showWrong(4); }
+
+    // Q5 (Australia)
+    const q5 = get("q5").value;
+    if (q5 === "australia") { score += 20; showCorrect(5); } else { showWrong(5); }
+
+    // show total score
+    if (get("totalScore")) get("totalScore").textContent = `Total Score: ${score}`;
+
+    // update attempts
+    let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
+    if (isNaN(attempts)) attempts = 0;
+    attempts += 1;
+    localStorage.setItem("total_attempts", attempts);
+    updateAttemptsDisplay(attempts);
+
+    // message
+    if (get("over80")) {
+      get("over80").textContent = (score >= 80) ? "Congratulations! You scored above 80!" : "Try again! You scored 80 or below.";
     }
   }
-}
 
-function updateAttemptsDisplay(n) {
-  const el = document.getElementById("totalAttempts");
-  if (el) el.textContent = `Total Attempts: ${n}`;
-}
+  // Attach handlers on DOM ready, and expose function for debugging
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = get("gradeBtn");
+    if (btn) btn.addEventListener("click", gradeQuiz);
+    // initialize attempts
+    let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
+    if (isNaN(attempts)) attempts = 0;
+    updateAttemptsDisplay(attempts);
+    // expose for console testing
+    window.gradeQuiz = gradeQuiz;
+  });
+
+})();
