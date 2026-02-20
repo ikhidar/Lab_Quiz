@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>US Geography Quiz</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <h1>US Geography Quiz</h1>
+
+  <form id="quizForm" onsubmit="return false;">
+    <!-- Q1 -->
+    <div class="q">
+      <h3>1. What is the capital of California?</h3>
+      <input type="text" id="q1" aria-label="Capital of California" />
+      <span id="mark1" class="mark" aria-hidden="true"></span>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q">
+      <h3>2. What is the longest river?</h3>
+      <select id="q2" aria-label="Longest river">
+        <option value="">Select one</option>
+        <option value="mississippi">Mississippi</option>
+        <option value="colorado">Colorado</option>
+      </select>
+      <span id="mark2" class="mark" aria-hidden="true"></span>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q">
+      <h3>3. Which presidents are carved into Mount Rushmore?</h3>
+
+      <div class="opts">
+        <input type="checkbox" id="Jefferson" />
+        <label for="Jefferson">Thomas Jefferson</label>
+
+        <input type="checkbox" id="Roosevelt" />
+        <label for="Roosevelt">Theodore Roosevelt</label>
+
+        <input type="checkbox" id="Jackson" />
+        <label for="Jackson">Andrew Jackson</label>
+
+        <input type="checkbox" id="Lincoln" />
+        <label for="Lincoln">Abraham Lincoln</label>
+      </div>
+
+      <span id="mark3" class="mark" aria-hidden="true"></span>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q">
+      <h3>4. What is the smallest US state?</h3>
+
+      <div class="opts">
+        <input type="radio" id="q4_maine" name="q4" value="maine" />
+        <label for="q4_maine">Maine</label>
+
+        <input type="radio" id="q4_rhode" name="q4" value="rhode" />
+        <label for="q4_rhode">Rhode Island</label>
+
+        <input type="radio" id="q4_texas" name="q4" value="texas" />
+        <label for="q4_texas">Texas</label>
+      </div>
+
+      <span id="mark4" class="mark" aria-hidden="true"></span>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q">
+      <h3>5. Where is the White House located?</h3>
+      <select id="q5" aria-label="Where is the White House located">
+        <option value="">Select one</option>
+        <option value="dc">Washington DC</option>
+        <option value="ny">New York</option>
+      </select>
+      <span id="mark5" class="mark" aria-hidden="true"></span>
+    </div>
+
+    <div class="actions">
+      <button id="gradeBtn" type="button">Submit Quiz</button>
+    </div>
+  </form>
+
+  <section class="results" aria-live="polite">
+    <p id="totalScore"></p>
+    <p id="totalAttempts"></p>
+    <p id="over80" class="msg"></p>
+  </section>
+
+  <footer>
+    <p>Imane Khidar Lab 3</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
