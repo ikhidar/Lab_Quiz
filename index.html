@@ -1,69 +1,104 @@
-<!-- Q1 -->
-<div class="q">
-  <h3>1. What keyword declares a variable in JavaScript?</h3>
-  <input type="text" id="q1" aria-label="JavaScript variable keyword" />
-  <span id="mark1" class="mark"></span>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript Quiz</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-<!-- Q2 -->
-<div class="q">
-  <h3>2. Which method converts a string to lowercase?</h3>
-  <select id="q2">
-    <option value="">Select one</option>
-    <option value="tolowercase">toLowerCase()</option>
-    <option value="touppercase">toUpperCase()</option>
-    <option value="parseint">parseInt()</option>
-  </select>
-  <span id="mark2" class="mark"></span>
-</div>
+<body>
+  <!-- Visible site title -->
+  <header>
+    <h1 id="siteTitle">JavaScript Quiz</h1>
+  </header>
 
-<!-- Q3 -->
-<div class="q">
-  <h3>3. Which are JavaScript data types?</h3>
+  <main>
+    <form id="quizForm" onsubmit="return false;">
+      <!-- Q1 -->
+      <div class="q">
+        <h3>1. What keyword declares a variable in JavaScript?</h3>
+        <input type="text" id="q1" aria-label="JavaScript variable keyword" />
+        <span id="mark1" class="mark" aria-hidden="true"></span>
+      </div>
 
-  <div class="opts">
-    <input type="checkbox" id="String" />
-    <label for="String">String</label>
+      <!-- Q2 -->
+      <div class="q">
+        <h3>2. Which method converts a string to lowercase?</h3>
+        <select id="q2">
+          <option value="">Select one</option>
+          <option value="tolowercase">toLowerCase()</option>
+          <option value="touppercase">toUpperCase()</option>
+          <option value="parseint">parseInt()</option>
+        </select>
+        <span id="mark2" class="mark" aria-hidden="true"></span>
+      </div>
 
-    <input type="checkbox" id="Boolean" />
-    <label for="Boolean">Boolean</label>
+      <!-- Q3 -->
+      <div class="q">
+        <h3>3. Which are JavaScript data types?</h3>
+        <div class="opts">
+          <input type="checkbox" id="String" />
+          <label for="String">String</label>
 
-    <input type="checkbox" id="Car" />
-    <label for="Car">Car</label>
+          <input type="checkbox" id="Boolean" />
+          <label for="Boolean">Boolean</label>
 
-    <input type="checkbox" id="Number" />
-    <label for="Number">Number</label>
-  </div>
+          <input type="checkbox" id="Car" />
+          <label for="Car">Car</label>
 
-  <span id="mark3" class="mark"></span>
-</div>
+          <input type="checkbox" id="Number" />
+          <label for="Number">Number</label>
+        </div>
+        <span id="mark3" class="mark" aria-hidden="true"></span>
+      </div>
 
-<!-- Q4 -->
-<div class="q">
-  <h3>4. Which symbol is used for strict equality?</h3>
+      <!-- Q4 -->
+      <div class="q">
+        <h3>4. Which symbol is used for strict equality?</h3>
+        <div class="opts">
+          <input type="radio" id="eq1" name="q4" value="==" />
+          <label for="eq1">==</label>
 
-  <div class="opts">
-    <input type="radio" id="eq1" name="q4" value="==" />
-    <label for="eq1">==</label>
+          <input type="radio" id="eq2" name="q4" value="===" />
+          <label for="eq2">===</label>
 
-    <input type="radio" id="eq2" name="q4" value="===" />
-    <label for="eq2">===</label>
+          <input type="radio" id="eq3" name="q4" value="=" />
+          <label for="eq3">=</label>
+        </div>
+        <span id="mark4" class="mark" aria-hidden="true"></span>
+      </div>
 
-    <input type="radio" id="eq3" name="q4" value="=" />
-    <label for="eq3">=</label>
-  </div>
+      <!-- Q5 -->
+      <div class="q">
+        <h3>5. Which company created JavaScript?</h3>
+        <select id="q5">
+          <option value="">Select one</option>
+          <option value="netscape">Netscape</option>
+          <option value="microsoft">Microsoft</option>
+          <option value="google">Google</option>
+        </select>
+        <span id="mark5" class="mark" aria-hidden="true"></span>
+      </div>
 
-  <span id="mark4" class="mark"></span>
-</div>
+      <!-- SUBMIT BUTTON — make sure id="gradeBtn" matches script.js -->
+      <div class="actions">
+        <button id="gradeBtn" type="button">Submit Quiz</button>
+      </div>
+    </form>
 
-<!-- Q5 -->
-<div class="q">
-  <h3>5. Which company created JavaScript?</h3>
-  <select id="q5">
-    <option value="">Select one</option>
-    <option value="netscape">Netscape</option>
-    <option value="microsoft">Microsoft</option>
-    <option value="google">Google</option>
-  </select>
-  <span id="mark5" class="mark"></span>
-</div>
+    <section class="results" aria-live="polite">
+      <p id="totalScore"></p>
+      <p id="totalAttempts"></p>
+      <p id="over80" class="msg"></p>
+    </section>
+  </main>
+
+  <!-- Footer with your name -->
+  <footer>
+    <p>Imane Khidar Lab 3</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
