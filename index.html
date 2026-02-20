@@ -2,86 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>JavaScript Quiz</title>
+  <title>World Geography Quiz</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- Visible site title -->
   <header>
-    <h1 id="siteTitle">JavaScript Quiz</h1>
+    <h1 id="siteTitle">World Geography Quiz</h1>
   </header>
 
   <main>
     <form id="quizForm" onsubmit="return false;">
       <!-- Q1 -->
       <div class="q">
-        <h3>1. What keyword declares a variable in JavaScript?</h3>
-        <input type="text" id="q1" aria-label="JavaScript variable keyword" />
+        <h3>1. What is the capital of France?</h3>
+        <input type="text" id="q1" aria-label="Capital of France" />
         <span id="mark1" class="mark" aria-hidden="true"></span>
       </div>
 
       <!-- Q2 -->
       <div class="q">
-        <h3>2. Which method converts a string to lowercase?</h3>
-        <select id="q2">
+        <h3>2. Which is the largest ocean?</h3>
+        <select id="q2" aria-label="Largest ocean">
           <option value="">Select one</option>
-          <option value="tolowercase">toLowerCase()</option>
-          <option value="touppercase">toUpperCase()</option>
-          <option value="parseint">parseInt()</option>
+          <option value="pacific">Pacific Ocean</option>
+          <option value="atlantic">Atlantic Ocean</option>
+          <option value="indian">Indian Ocean</option>
         </select>
         <span id="mark2" class="mark" aria-hidden="true"></span>
       </div>
 
       <!-- Q3 -->
       <div class="q">
-        <h3>3. Which are JavaScript data types?</h3>
+        <h3>3. Which of these are continents?</h3>
         <div class="opts">
-          <input type="checkbox" id="String" />
-          <label for="String">String</label>
+          <input type="checkbox" id="Asia" />
+          <label for="Asia">Asia</label>
 
-          <input type="checkbox" id="Boolean" />
-          <label for="Boolean">Boolean</label>
+          <input type="checkbox" id="Europe" />
+          <label for="Europe">Europe</label>
 
-          <input type="checkbox" id="Car" />
-          <label for="Car">Car</label>
+          <input type="checkbox" id="Africa" />
+          <label for="Africa">Africa</label>
 
-          <input type="checkbox" id="Number" />
-          <label for="Number">Number</label>
+          <input type="checkbox" id="Greenland" />
+          <label for="Greenland">Greenland</label>
         </div>
         <span id="mark3" class="mark" aria-hidden="true"></span>
       </div>
 
       <!-- Q4 -->
       <div class="q">
-        <h3>4. Which symbol is used for strict equality?</h3>
+        <h3>4. Which country has the largest population?</h3>
         <div class="opts">
-          <input type="radio" id="eq1" name="q4" value="==" />
-          <label for="eq1">==</label>
+          <input type="radio" id="q4_china" name="q4" value="china" />
+          <label for="q4_china">China</label>
 
-          <input type="radio" id="eq2" name="q4" value="===" />
-          <label for="eq2">===</label>
+          <input type="radio" id="q4_usa" name="q4" value="usa" />
+          <label for="q4_usa">United States</label>
 
-          <input type="radio" id="eq3" name="q4" value="=" />
-          <label for="eq3">=</label>
+          <input type="radio" id="q4_brazil" name="q4" value="brazil" />
+          <label for="q4_brazil">Brazil</label>
         </div>
         <span id="mark4" class="mark" aria-hidden="true"></span>
       </div>
 
       <!-- Q5 -->
       <div class="q">
-        <h3>5. Which company created JavaScript?</h3>
-        <select id="q5">
+        <h3>5. Where is the Great Barrier Reef located?</h3>
+        <select id="q5" aria-label="Great Barrier Reef location">
           <option value="">Select one</option>
-          <option value="netscape">Netscape</option>
-          <option value="microsoft">Microsoft</option>
-          <option value="google">Google</option>
+          <option value="australia">Australia</option>
+          <option value="usa">United States</option>
+          <option value="mexico">Mexico</option>
         </select>
         <span id="mark5" class="mark" aria-hidden="true"></span>
       </div>
 
-      <!-- SUBMIT BUTTON — make sure id="gradeBtn" matches script.js -->
       <div class="actions">
         <button id="gradeBtn" type="button">Submit Quiz</button>
       </div>
@@ -94,7 +92,6 @@
     </section>
   </main>
 
-  <!-- Footer with your name -->
   <footer>
     <p>Imane Khidar Lab 3</p>
   </footer>
