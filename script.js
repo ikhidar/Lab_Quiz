@@ -1,113 +1,112 @@
-(function () {
-  const $ = id => document.getElementById(id);
+document.querySelector("button").addEventListener("click", gradeQuiz);
+//Global variables
 
-  function setText(id, text) {
-    const el = $(id);
-    if (el) el.textContent = text;
-  }
+var score = 0;
+var attempts = localStorage.getItem("total_attempts");
+displayQ4Choices();
 
-  function setHTML(id, html) {
-    const el = $(id);
-    if (el) el.innerHTML = html;
-  }
-
-  function showCorrect(n) {
-    const el = $("mark" + n);
-    if (el) el.innerHTML = `<img src="check.png" alt="correct" width="20" height="20">`;
-  }
-  function showWrong(n) {
-    const el = $("mark" + n);
-    if (el) el.innerHTML = `<img src="x.png" alt="incorrect" width="20" height="20">`;
-  }
-
-  function clearMarksAndMessages() {
-    for (let i = 1; i <= 5; i++) {
-      const m = $("mark" + i);
-      if (m) m.innerHTML = "";
+function displayQ4Choices(){
+    let q4ChoicesArray = ["Maine", "Rhode Island", "Maryland", "Delaware"];
+    q4ChoicesArray = _.shuffle(q4ChoicesArray);
+    for( let i = 0; i <q4ChoicesArray.length; i++){
+        document.querySelector("#q4Choices").innerHTML += 
+        `<input type ="radio" name="q4" id="${q4ChoicesArray[i]}" value="${q4ChoicesArray[i]}"> <label for="${q4ChoicesArray[i]}"> ${q4ChoicesArray[i]}</label>`;
     }
-    setText("totalScore", "");
-    setText("over80", "");
-    ["q1Error","q2Error","q3Error","q4Error","q5Error","formError"].forEach(id => setText(id,""));
-  }
+        
+}
 
-  function updateAttemptsDisplay(n) {
-    const el = $("totalAttempts");
-    if (el) el.textContent = `Total Attempts: ${n}`;
-  }
+function isFormValid(){
+    let isValid = true;
 
-  function validateForm() {
-    ["q1Error","q2Error","q3Error","q4Error","q5Error","formError"].forEach(id => setText(id,""));
-    let valid = true;
+    if(document.querySelector("#q1").value == ""){
+        isValid = false;
+        document.querySelector("#validationFdbk").innerHTML= "Missing answer to question 1";
+    }
+    return isValid;
+}
 
-    const q1 = ($("q1") && $("q1").value.trim()) || "";
-    const q2 = ($("q2") && $("q2").value) || "";
-    const q4 = document.querySelector('input[name="q4"]:checked');
-    const q5 = ($("q5") && $("q5").value) || "";
+function rightAnswer(index){
+    document.querySelector(`#q${index}Feedback`).innerHTML = "Correct!";
+    document.querySelector(`#q${index}Feedback`).className = "bg-success text-white";
+    document.querySelector(`#markImg${index}`).innerHTML = "<img src='img/checkmark.png' alt='Checkmark'>";
+    score+=20;
+}
 
-    if (!q1) { setText("q1Error", "Please enter the capital of France."); valid = false; }
-    if (!q2) { setText("q2Error", "Please select the largest ocean."); valid = false; }
-    if (!q4) { setText("q4Error", "Please select the country with the largest population."); valid = false; }
-    if (!q5) { setText("q5Error", "Please select where the Great Barrier Reef is located."); valid = false; }
+function wrongAnswer(index){
+    document.querySelector(`#q${index}Feedback`).innerHTML = "Incorrect!";
+    document.querySelector(`#q${index}Feedback`).className = "bg-warning text-white";
+    document.querySelector(`#markImg${index}`).innerHTML = "<img src='img/xmark.png' alt='xmark'>";
+}
 
-    if (!valid) setText("formError", "Please fix the highlighted fields and submit again.");
-    return valid;
-  }
 
-  function gradeQuiz() {
-    if (!validateForm()) return;
-
-    clearMarksAndMessages();
-    let score = 0;
-
-    const q1 = (($("q1") && $("q1").value) || "").trim().toLowerCase();
-    if (q1 === "paris") { score += 20; showCorrect(1); } else { showWrong(1); }
-
-    const q2 = ($("q2") && $("q2").value) || "";
-    if (q2 === "pacific") { score += 20; showCorrect(2); } else { showWrong(2); }
-
-    const asia = !!($("Asia") && $("Asia").checked);
-    const europe = !!($("Europe") && $("Europe").checked);
-    const africa = !!($("Africa") && $("Africa").checked);
-    const greenland = !!($("Greenland") && $("Greenland").checked);
-    if (asia && europe && africa && !greenland) { score += 20; showCorrect(3); } else { showWrong(3); }
-
-    const q4 = document.querySelector('input[name="q4"]:checked');
-    if (q4 && q4.value === "china") { score += 20; showCorrect(4); } else { showWrong(4); }
-
-    const q5 = ($("q5") && $("q5").value) || "";
-    if (q5 === "australia") { score += 20; showCorrect(5); } else { showWrong(5); }
-
-    setText("totalScore", `Total Score: ${score}`);
-
-    let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
-    if (isNaN(attempts)) attempts = 0;
-    attempts += 1;
-    localStorage.setItem("total_attempts", attempts);
-    updateAttemptsDisplay(attempts);
-
-    const msg = (score >= 80) ? "Congratulations! You scored above 80!" : "Try again! You scored 80 or below.";
-    setText("over80", msg);
-  }
-
-  function init() {
-    const btn = $("gradeBtn");
-    if (btn) {
-      btn.addEventListener("click", gradeQuiz);
-    } else {
-      console.warn("gradeBtn not found in DOM.");
+function gradeQuiz(){
+    console.log("Grading quiz...")
+    //resets validation feedback
+    document.querySelector("#validationFdbk").innerHTML ="";
+    if(!isFormValid()){
+        return;
     }
 
-    let attempts = parseInt(localStorage.getItem("total_attempts"), 10);
-    if (isNaN(attempts)) attempts = 0;
-    updateAttemptsDisplay(attempts);
 
-    window.gradeQuiz = gradeQuiz;
-    window.clearMarksAndMessages = clearMarksAndMessages;
-  }
+    score = 0;
+    let q1Response = document.querySelector("#q1").value.toLowerCase();
+    let q2Response = document.querySelector("#q2").value;
+    let q4Response = document.querySelector("input[name=q4]:checked").value;
+    let q5Response = document.querySelector("#q5").value;
+    console.log(q1Response);
+    console.log(q2Response);
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-})();
+    //grade q1 cleaner now
+    if(q1Response == "sacramento"){
+        rightAnswer(1);
+    }else{
+        wrongAnswer(1);
+    }
+
+    //grade q2
+    if(q2Response == "mo"){
+        rightAnswer(2);
+    }else{
+        wrongAnswer(2);
+    }
+    //grade q3
+    if(document.querySelector("#Jefferson").checked && document.querySelector("#Roosevelt").checked 
+        && !document.querySelector("#Jackson").checked && !document.querySelector("#Franklin".checked))
+    {
+            rightAnswer(3);
+    }
+    else{
+            wrongAnswer(3);
+    }
+    //grade q4
+    if(q4Response == "Rhode Island"){
+        rightAnswer(4);
+    }
+    else{
+        wrongAnswer(4);
+    }
+
+    if(q5Response == "austin"){
+        rightAnswer(5);
+    }
+    else{
+        wrongAnswer(5);
+    }
+
+    if(score >= 80){
+        document.querySelector("#totalScore").innerHTML = `Total Score: ${score}`;
+        document.querySelector("#totalAttempts").innerHTML = `Total Attempts: ${++attempts}`;
+        localStorage.setItem("total_attempts", attempts)
+        document.querySelector("#over80").innerHTML = "Congratulations! You scored above 80!";
+        document.querySelector("#over80").className = "bg-success text-white";
+        console.log(score);
+    }
+    else{
+        document.querySelector("#totalScore").innerHTML = `Total Score: ${score}`;
+        document.querySelector("#totalAttempts").innerHTML = `Total Attemps: ${++attempts}`;
+        localStorage.setItem("total_attempts", attempts)
+        document.querySelector("#over80").innerHTML = "Try again! You scored less than 80";
+        document.querySelector("#over80").className = "bg-danger text-white";
+    }
+    
+}
