@@ -1,101 +1,67 @@
-body {
-  background: white;
-  color: #111;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
+body{
+    background-color: black;
+    color: #ffc107
+}
+#header{
+    color:black;
+}
+.csumb{
+    color:#ffc107;
+    text-align:center; 
+    padding-top:10px
+}
+#csumbImg{
+    width:10%;
+}
+#myName{
+    color:black;
+    font-size:1em;
 }
 
-h1 {
-  margin-top: 10px;
-  margin-bottom: 20px;
+input[type="checkbox"]:checked + label{
+    border: 2px solid #ffc107;
+    accent-color: #ffc107;
 }
-
-form {
-  width: 90%;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: left;
+input[name=q4]:checked:checked + label{
+    border: 2px solid #ffc107;
 }
-
-.q {
-  margin: 18px 0;
+#Jackson{
+    accent-color: #ffc107;
 }
-
-.q h3 {
-  margin: 6px 0 8px;
-  font-weight: 600;
-  text-align: center;
+#Franklin{
+    accent-color: #ffc107;
 }
-
-.opts {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 8px;
+#Jefferson{
+    accent-color: #ffc107;
 }
-
-input[type="text"], select {
-  display: block;
-  margin: 6px auto 10px;
-  padding: 8px 10px;
-  width: 70%;
-  max-width: 380px;
+#Roosevelt{
+    accent-color: #ffc107;
 }
-
-label {
-  margin-right: 6px;
-  cursor: pointer;
+input[type="radio"]{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    outline: none;
+    background-color: black;
+    cursor: pointer;
 }
-
-.mark {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  vertical-align: middle;
-  margin-left: 8px;
+input[type="radio"]:checked{
+    background-color: #ffc107;
 }
-
-.actions {
-  text-align: center;
-  margin-top: 12px;
+#q1:hover{
+    outline: solid #ffc107;
 }
-
-button#gradeBtn {
-  padding: 10px 18px;
-  background: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
+#q2:hover{
+    outline: solid #ffc107;
 }
-
-.form-error {
-  color: #8b0000;
-  text-align: center;
-  margin-bottom: 8px;
-  font-weight: 600;
+#q3:hover{
+    outline: solid #ffc107;
 }
-.field-error {
-  color: #8b0000;
-  font-size: 0.9rem;
-  margin-top: 6px;
-  text-align: center;
+#q5:hover{
+    outline: solid #ffc107;
 }
-
-.results {
-  width: 90%;
-  max-width: 700px;
-  margin: 18px auto;
-  text-align: center;
+footer{
+    background-color: #ffc107;
 }
-
-footer {
-  margin-top: 40px;
-  font-weight: bold;
-}
-
-.mark img { vertical-align: middle; }
